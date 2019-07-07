@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+html,body
+{
+	color: #3F3F3F;
+	font-family: 'Roboto Slab', serif !important;
+	background-color: #BDBDBD!important;
+}
+
+.form-control
+{
+		/*margin-bottom: 15px;*/
+}
+
+.w-100
+{
+	margin: 0 !important;
+}
+
+.card-content{
+	padding: 2em 5em 3em 5em!important;
+	-moz-box-shadow: 0 8px 28px 0 rgba(0, 0, 0, 0.09);
+	-webkit-box-shadow: 0 5px 28px 0 rgba(0, 0, 0, 0.09);
+	box-shadow: 0 5px 28px 0 rgba(0, 0, 0, 0.09);
+	border: none!important;
+	background-color: #00BCD4!important;
+}
+
+.card-table{
+	padding: 1em 3em 1em 3em!important;
+	-moz-box-shadow: 0 8px 28px 0 rgba(0, 0, 0, 0.09);
+	-webkit-box-shadow: 0 5px 28px 0 rgba(0, 0, 0, 0.09);
+	box-shadow: 0 5px 28px 0 rgba(0, 0, 0, 0.09);
+	border: none!important;
+	background-color:#CEF6F5 !important;
+}
+
+.card{
+	padding: 1em 3em 1em 3em!important;
+	-moz-box-shadow: 0 8px 28px 0 rgba(0, 0, 0, 0.09);
+	-webkit-box-shadow: 0 5px 28px 0 rgba(0, 0, 0, 0.09);
+	box-shadow: 0 5px 28px 0 rgba(0, 0, 0, 0.09);
+	border: none!important;
+	background-color:#4E94AB!important;
+}
+
+
+.titulo_lista
+{
+	background-color: #00BCD4!important;
+}
+
+.titulo_data_table
+{
+	font-weight:bold;
+}
+
+.table
+{
+	border: none!important;
+	font-size: 13px;
+	align-content: center;
+}
+
+th::after{
+	display: none !important;
+}
+row::before
+{
+	width: 1500px;
+}
+
+.ocultar
+{
+	display:none;
+}
+
+.primerafila
+{
+		background-color: #CEECF5!important;
+}
+.ingresar
+{
+	width: 30px!important;
+	height: 30px!important;
+}
+.salir
+{
+	width: 30px!important;
+	height: 30px!important;
+}
+.fotos
+{
+		background-color: #00BCD4!important;
+		border: none !important;
+		text-colorr: red !important;
+}
+
+.imagen
+{
+	width: 70px!important;
+	height: 70px!important;
+}
+
+.foto
+{
+	width: 120px;
+	height: 120px;
+	justify-content: flex-end !important;
+}
+
+.arbol
+{
+	width: 25px;
+	height: 25px;
+	background-color: red;
+}
+.nombre_persona
+{
+	font-family: italic !important;
+	font-size: 40px;
+}
+
+.foto_tabla
+{
+	width: 30px;
+	height: 30px;
+	justify-content: flex-end !important;
+}
+.actualizar
+{
+	width: 30px!important;
+	height: 30px!important;
+}
+
+.Consulta
+{
+		background-color: #CEECF5!important;
+}
+
+.hr
+{
+  height: 2px;
+  background-color: #0056b2;
+}
+
+.dataTables_filter
+{
+	display:none!important;
+}
+.form-control
+{
+	font-family: 'Roboto Slab', serif !important;
+	font-size: 15px!important;;
+}
+
+.no-valido {
+	 border : red !important;
+}
+
+.campo-vacio {
+	border: red !important;
+}
+
+.botones
+{
+	width: 30px;
+	height: 30px;
+}
