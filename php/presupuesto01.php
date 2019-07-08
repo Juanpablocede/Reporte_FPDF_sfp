@@ -10,12 +10,12 @@
             parent::__construct('P','mm','letter');
         }
     }
-
-    $pdf = new PDF();
+    //$pdf=new FPDF('L','mm','A4');
+    //('mm','p't, 'cm', 'in')
+    $pdf = new PDF('P','cm','A4');
 
     include("conexion.php");
     $conexion = $conn;
-
     $linea=0; $mt_asignado=0;
 
     //Creación del objeto de la clase heredada
@@ -26,21 +26,22 @@
     $pdf->SetFont('Times','',9);
     // Este SELECT es para hacer hacer el detalle de los intereses
     $sql = "SELECT ".
+               "SUBSTRING(codestpro1,24,2) AS codestpro1, ".
+               "SUBSTRING(codestpro2,22,4) AS codestpro2, ".
+               "SUBSTRING(codestpro3,24,2) AS codestpro3, ".
+               "SUBSTRING(codestpro4,24,2) AS codestpro4, ".
+               "SUBSTRING(codestpro5,24,2) AS codestpro5, ".
                "spg_cuenta, ".
                "denominacion, ".
-               "SUM(asignado)  AS asignado ".
+               "asignado ".
            "FROM ".
               "spg_asignacion_ejecucion ".
            "WHERE ".
               "nivel=3 ".
-           "GROUP BY ".
-               "spg_cuenta, ".
-               "denominacion ".
            "ORDER BY ".
+               "codestpro2, ".
                "spg_cuenta ";
-    //echo $sql; die();
     $resultado = pg_query($conexion,$sql);
-    //echo "<br>".print($resultado)."<br>";
     if($resultado===false)
 	  {
             echo "<script type=\"text/javascript\">alert('Advertencia, No existen registros para mostrar...');</script>";
@@ -49,6 +50,11 @@
     {
         while($resultados = pg_fetch_object($resultado))
         {
+	          $codestpro1=$resultados->codestpro1;
+            $codestpro2=$resultados->codestpro2;
+            $codestpro3=$resultados->codestpro3;
+            $codestpro4=$resultados->codestpro4;
+            $codestpro5=$resultados->codestpro5;
             $spg_cuenta=$resultados->spg_cuenta;
             $denominacion=$resultados->denominacion;
             $asignado=$resultados->asignado;
@@ -56,62 +62,53 @@
       	    if ($linea==0)
             {
                   $pdf->AddPage();
-                  $pdf->Rect(0,0,215,278);
-                  //Imprimir Logos
-                  //$pdf->Image('../../shared/imagebank/logo_mat_proforca.jpg',2,2,15,14);
-                  $pdf->Image('../imagenes/logo_maderas_orinoco.jpg',194,2,15,14);
-                  $pdf->Image('../imagenes/corpoforestal.jpg',3,1,26,22); // Agregar Logo MAT
-                  $pdf->SetXY(01,18);
-                  $pdf->SetFont('Arial','',8);
-                  //$pdf->SetXY(02,21);
-                  //$pdf->Cell(15,4,$codestpro1,0,0,'L');
-                  $pdf->Line(2,259,215,259);
-                  $pdf->Image('../imagenes/GobHeader.jpg',1,260,210,18); // Agregar Pie de pagina proforca
-                  //Arial bold 15
-                  $pdf->SetFont('Arial','B',14);
-                  //Movernos a la derecha
-                  $linea=7;
-                  $pdf->Ln($linea);
-                  $pdf->Rect(2,2,213,275);
+                  //Imprimir rectangulo
+                  $pdf->Rect(1,1,214,277);
+                  //Imprimir Logos cabeceras
+                  $pdf->Image('../imagenes/logo_maderas_orinoco.jpg',194,2,14,14);
+                  $pdf->Image('../imagenes/corpoforestal.jpg',2,2,17,17);
+                  //Imprimir pie de paginas
+                  $pdf->Image('../imagenes/GobHeader.jpg',2,259,210,15);
+                  $pdf->Line(1,259,215,259);
+
+                  $linea=$linea+8;
                   $pdf->SetXY(50,$linea);
-                  $pdf->Cell(135,4,'Listado de Asignacion Presupuestaria',0,0,'C');
-                  $linea=$linea+10;
+                  $pdf->SetFont('Arial','B',14);
+                  $pdf->Cell(135,4,utf8_decode('Listado de Asignaciòn Presupuestaria'),0,0,'C');
+
+                  //Imprimir numeraciòn de pàginas
+                  $linea=$linea+6;
+                  $pdf->SetFont('Arial','B',6);
+                  $pdf->SetXY(200,$linea);
+                  $pdf->Cell(10,10,utf8_decode('Pàgina:').$pdf->PageNo().'/{nb}',0,0,'C');
+
+                  $pdf->Line(1,20,215,20);
                   $pdf->SetFont('Arial','',8);
-                  $pdf->SetXY(2,17);
+                  $pdf->SetXY(2,20);
                   $pdf->Cell(15,4,utf8_decode("Còdigo"),0,0,'L');
                   $pdf->Cell(180,4,utf8_decode("Denominaciòn"),0,0,'L');
                   $pdf->Cell(18,4,utf8_decode("Asignaciòn"),0,1,'R');
-                  $pdf->Line(2,21,215,21);
-                  $linea=$linea+4;
+                  $pdf->Line(1,24,215,24);
+                  $linea=$linea+7;
             }
-            /*
-            Veamos detalladamente la propiedad Cell, los parámetros son los siguientes
 
-                $pdf->Cell(50,10,'Probando FPDF',1,1,'L');
-
-            Cell(ancho, Alto, texto, borde, salto de linea, alineacion de texto)
-
-            Aclaramos que borde puede tomar los valores 1: con border y 0 sin borde.
-            Salto de linea 1 saltar linea y 0: no saltar linea. En este caso para que sea comprensible hemos identificado el salto de linea, pero debería ir sin texto y sin borde.
-
-            multi cell
-            */
-            $linea=$linea+3;
+            $linea=$linea+4;
     		    $pdf->SetXY(01,18);
-            //$pdf->SetFont('Arial','',8);
-            $pdf->SetXY(01,$linea);  //22
+            $pdf->SetXY(01,$linea);
             $pdf->Cell(15,4,$spg_cuenta,0,0,'L');
             $pdf->SetXY(18,$linea);
             $pdf->Cell(165,4,utf8_decode($denominacion),0,0,'L');
             $pdf->SetXY(184,$linea);
             $pdf->Cell(30,4,number_format($asignado,2,",","."),0,1,'R');
+
             $mt_asignado=$mt_asignado+$asignado;
-            if ($linea>=255)
+
+            if ($linea>=253)
             {
                 $linea=0;
             }
   	  }
-      $linea=$linea+3;
+      $linea=$linea+7;
       $pdf->SetXY(20,$linea);
       $pdf->cell(30,4,'TOTAL ASIGNACION PRESUPUESTARIA',0,0,'L');
       $pdf->SetXY(184,$linea);
