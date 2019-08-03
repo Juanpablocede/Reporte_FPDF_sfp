@@ -4,10 +4,10 @@
     $host="localhost";
     $port="5432";
     $user="postgres";
-    $passwd="";
+    $passwd="admin";
     $dbname="db_mdo_2019";
 
-    $conn = pg_connect("user=$user host=$host port=$port dbname=$dbname");
+    $conn = pg_connect("user=$user host=$host port=$port dbname=$dbname password=$passwd");
 
     if (!$conn)
     {
